@@ -1,0 +1,41 @@
+/* combination을 이용한 파스칼 삼각형 그리기 */
+#include <stdio.h>
+
+unsigned int combination(int, int); //함수 원형.
+
+int main() {
+	int i, n, r; //i,r은 루프 제어 변수, n은 입력받을 값을 저장하는 변수.
+
+	printf("n? "); //n값을 입력받는다.
+	fflush(stdout);
+	scanf("%d", &n);
+
+	for (i = 0; i < n; i++) { //큰 틀 : 파스칼 삼각형에서 나타나는 C(a,b)에서 a의 범위는 0~n이다.
+		for (r = 0; r <= i; r++) { //세부 틀 : b의 범위는 0~a이다.
+			printf("%5d", combination(i, r));
+		}
+		printf("\n"); //한 줄이 끝날 때마다 줄바꿈을 해준다.
+
+	}
+
+	return 0;
+}
+
+unsigned int combination(int n, int r) { //combination값 계산 함수. C(n,r)
+	int i; //루프 제어 변수.
+	unsigned int nrdiv=1, rfac=1; //nrdiv는  r+1부터 n까지의 자연수를 곱한 값을 저장(분자값)
+                                  //rfac은 1부터 n-r까지의 자연수를 곱한 값은 저장(분모값)
+	if(r==0 || r==n) //C(n,r)에서 r이 0이거나 n이면 그 값은 1이 된다.
+		return 1;
+	if(r==1 || r==(n-1)) //C(n,r)에서 r이 1이거나 n-1이면 그 값은 n이 된다.
+		return n;
+
+	for(i=n; i>r; i--) { //r+1부터 n까지의 자연수를 곱한 값 계산 (n!/r!)
+		nrdiv *= i;
+	}
+	for(i=1; i<=(n-r); i++) { // 1부터 n-r까지의 자연수를 곱한 값 계산 ((n-r)!)
+		rfac *= i;
+	}
+
+	return (nrdiv / (rfac)); //반환값은 C(n,r)
+}

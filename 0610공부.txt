@@ -1,0 +1,245 @@
+0610 공부
+
+
+
+1. 별찍기 함수
+
+
+#include <stdio.h>
+
+void printstar(int);
+
+int main() {
+	int n;
+
+	printf("횟수: ");
+	fflush(stdout);
+	scanf("%d", &n);
+
+	printstar(n);
+
+	return 0;
+
+}
+
+void printstar(int n) {
+	int i;
+	for(i=0; i<n; i++)
+		printf("*");
+}
+
+
+
+
+2. 306쪽 조합 계산
+
+#include <stdio.h>
+
+int get_integer(void);
+unsigned long factorial(int);
+int combination(int, int);
+
+int main() {
+
+	int a, b;
+	a = get_integer();
+	b = get_integer();
+
+	printf("C(%d, %d) = %d", a, b, combination(a, b));
+
+	return 0;
+}
+
+int get_integer(void) {
+	int n;
+
+	printf("n? ");
+	fflush(stdout);
+	scanf("%d", &n);
+
+	return n;
+}
+
+unsigned long factorial(int n) {
+	int i;
+	unsigned long result;
+
+	for(result=1, i=1; i<=n; i++) {
+		result *= i;
+	}
+
+	return result;
+}
+
+int combination(int a, int b) {
+	int i, son, result;
+
+	for(i=a, son=1; i>=a-b+1; i--) {
+		son *= i;
+	}
+
+	result = son / factorial(b);
+
+	return result;
+}
+
+
+
+3. 307쪽 소수찾기
+
+
+#include <stdio.h>
+
+void print_prim(int n);
+
+int main() {
+	int n;
+
+	printf("1부터 몇까지 중에서 소수를 찾을까요? ");
+	fflush(stdout);
+	scanf("%d", &n);
+
+	print_prim(n);
+
+	return 0;
+}
+void print_prim(int n) {
+	int i, j;
+
+	for(i=1; i<=n; i++) {
+		if(i>2 && i%2==0)
+			continue;
+		else if(i>3 && i%3==0)
+			continue;
+		else if(i>5 && i%5==0)
+			continue;
+		else if(i>7 && i%7==0)
+			continue;
+		else if(i>13 && i%13==0)
+			continue;
+		else {
+			for(j=2; j<=i; j++) {
+				if(i!=j && i%j==0)
+					continue;
+				else {
+					printf("%d\n", i);
+					break;
+				}
+			}
+		}
+	}
+}
+
+
+
+4. 난수함수
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main() {
+	int i, n;
+
+	printf("n? ");
+	fflush(stdout);
+	scanf("%d", &n);
+
+	srand((unsigned)time(NULL));
+
+	for(i=0; i<=n; i++) {
+		printf("%2d\n", rand()%100);
+	}
+	return 0;
+}
+
+
+
+5. 난수 최댓값 찾기
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main() {
+	int max, i, n, temp;
+
+	srand((unsigned)time(NULL));
+
+	printf("n? ");
+	fflush(stdout);
+	scanf("%d", &n);
+
+	for(max=-1,i=1; i<=n; i++) {
+		temp=rand();
+		if(temp>max) {
+			max=temp;
+		}
+	}
+
+	printf("최댓값 : %d", max);
+
+	return 0;
+}
+
+
+
+6. 346쪽 정적변수
+
+
+#include <stdio.h>
+
+void sub(void);
+
+int main(void) {
+	int i;
+
+	for(i=0; i<3; i++)
+		sub();
+
+	return 0;
+}
+
+void sub(void) {
+	int auto_c=0;
+	static int static_c=0;
+
+	auto_c++;
+	static_c++;
+
+	printf("auto = %d\n", auto_c);
+	printf("static = %d\n", static_c);
+
+	return;
+}
+
+
+
+7. 357쪽 팩토리얼 재귀함수
+
+
+#include <stdio.h>
+
+long fact(int);
+
+int main() {
+	int n;
+	printf("n? ");
+	fflush(stdout);
+	scanf("%d", &n);
+
+	printf("%d! = %d", n, fact(n));
+
+	return 0;
+}
+
+long fact(int n) {
+	if(n<=1)
+		return 1;
+	else
+		return n*fact(n-1);
+}
+
+
+
+8. 

@@ -1,0 +1,423 @@
+0611 공부    헐 내일 시험
+
+1. 배열 첫 연습
+
+#include <stdio.h>
+int main() {
+	int j;
+	int grade[5];
+
+	for(j=0; j<5; j++) {
+		grade[j] = (j+1)*10;
+	}
+	for(j=0; j<5; j++)
+		printf("grade[%d] = %d\n", j, grade[j]);
+	return 0;
+}
+
+
+
+2. 배열 원소를 난수로 초기화하고 프린트
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#define SIZE 10
+
+int main() {
+	int i;
+	int arr[SIZE];
+
+	srand((unsigned)time(NULL));
+
+	for(i=0; i<SIZE; i++) {
+		arr[i]=rand()%20+1;
+	}
+	for(i=0; i<SIZE; i++)
+		printf("arr[%d] = %d\n", i, arr[i]);
+	return 0;
+}
+
+
+
+3. 380쪽 예제3
+
+#include <stdio.h>
+#define SIZE 5
+
+int main() {
+	int i;
+	int grade[SIZE];
+
+	printf("5명의 점수를 입력하세요. \n");
+	for(i=0; i<SIZE; i++) {
+		fflush(stdout);
+		scanf("%d", &grade[i]);
+	}
+	for(i=0; i<SIZE; i++)
+		printf("grade[%d] = %d\n", i, grade[i]);
+	return 0;
+}
+
+
+4. 381쪽 예제4
+
+#include <stdio.h>
+#define STUDENT 35
+
+int main() {
+	int grades[STUDENT];
+	int sum=0, i, average;
+
+	for(i=0; i<STUDENT; i++) {
+		printf("%d번 학생 성적 입력 : ", i+1);
+		fflush(stdout);
+		scanf("%d", &grades[i]);
+	}
+	for(i=0; i<STUDENT; i++)
+		sum+=grades[i];
+
+	average = sum / STUDENT;
+	printf("성적의 평균 : %d", average);
+
+	return 0;
+}
+
+
+
+5. 387쪽 배열 크기 계산
+
+#include <stdio.h>
+
+int main() {
+	int a[]={1, 2, 3, 4, 5};
+	int i;
+
+	for(i=0; i<sizeof(a)/sizeof(a[0]); i++) {
+		printf("a[%d] = %d \n", i, a[i]);
+	}
+	printf("배열의 크기는 %d", sizeof(a)/sizeof(a[0]));
+
+	return 0;
+}
+
+
+
+6. 387쪽 응용 배열을 난수로 초기화해서 다른 배열에 복사
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#define SIZE 5
+
+int main() {
+	int i;
+	int a[SIZE];
+	int b[SIZE];
+
+	srand((unsigned)time(NULL));
+	for(i=0; i<SIZE; i++) {
+		a[i] = rand()%10+1;
+		b[i] = a[i];
+	}
+	for(i=0; i<SIZE; i++) {
+		printf("a[%d] = %d   b[%d] = %d\n", i, a[i], i, b[i]);
+	}
+	return 0;
+}
+
+
+
+7. 388쪽 배열 비교 응용
+
+#include <stdio.h>
+int main() {
+	int a[] = {1, 2, 3};
+	int b[] = {0, 2, 3};
+	int i, count;
+
+	for(i=0, count=0; i<3; i++) {
+		if(a[i]==b[i])
+			count++;
+	}
+	printf("배열의 원소 %d개 중 %d개가 일치합니다.\n", sizeof(a)/sizeof(a[0]), count);
+	return 0;
+}
+
+
+
+8. 388쪽 배열 비교 응용2
+
+#include <stdio.h>
+#define SIZE 5
+int main() {
+	int a[SIZE] = {1, 2, 3, 4, 5};
+	int b[SIZE] = {1, 2, 3, 4, 5};
+	int i;
+
+	for(i=0; i<SIZE; i++) {
+		if(a[i]!=b[i]) {
+			printf("다릅니다!\n");
+			break;
+		}
+	}
+	if(i==SIZE)
+		printf("일치합니다.\n");
+	return 0;
+}
+
+
+
+9. 388쪽 극장 좌석 예약 시스템 (왠지 모르는 논리적 오류 있음)
+
+#include <stdio.h>
+#define SIZE 10
+
+void print_lines(void);
+char reservation(void);
+
+int main() {
+	int seats[SIZE] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+	int reserve[SIZE] = {0};
+	int i, seat_num;
+	char answer;
+
+	while(answer!='n') {
+		answer = reservation();
+
+		if(answer=='n') {
+			printf("좌석 예약 프로그램을 종료합니다.\n");
+			break;
+		}
+
+		print_lines();
+		for(i=0; i<SIZE; i++)
+			printf("%3d", seats[i]);
+		printf("\n");
+		print_lines();
+		for(i=0; i<SIZE; i++)
+			printf("%3d", reserve[i]);
+		printf("\n");
+
+		do {
+			printf("몇번째 좌석을 예약하시겠습니까? ");
+			fflush(stdout);
+			scanf("%d", &seat_num);
+
+			if(seat_num<seats[0] || seat_num>seats[SIZE-1])
+				printf("올바른 좌석의 번호를 입력해주세요.\n");
+			else if (reserve[seat_num-1]==1) {
+				printf("이미 예약된 자리입니다. 다른 좌석을 선택하세요.\n");
+			}
+			else {
+				printf("예약되었습니다.\n");
+				reserve[seat_num-1]=1;
+				break;
+			}
+		} while(seat_num<seats[0] || seat_num>seats[SIZE-1] || reserve[seat_num-1]==1);
+
+	}
+	return 0;
+}
+void print_lines(void) {
+	int n;
+
+	for(n=0; n<33; n++)
+		printf("-");
+	printf("\n");
+
+
+}
+
+char reservation(void) {
+	char ans;
+		printf("좌석을 예약하시겠습니까?(y 또는 n) ");
+		fflush(stdout);
+		scanf(" %c", &ans); //공백문자 제외하고 일반문자만을 입력받음!!!!!
+
+		while(ans!='y' && ans!='n') {
+			printf("y 또는 n으로 올바르게 입력해주세요.\n");
+
+			printf("좌석을 예약하시겠습니까?(y 또는 n) ");
+					fflush(stdout);
+					scanf("%c", &ans);
+		}
+	return ans;
+}
+
+
+
+
+10. 391쪽 최소값 구하기
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#define SIZE 10
+
+int main() {
+	int a[SIZE] = {0};
+	int i, min=101;
+
+	for(i=0; i<33; i++)
+		printf("-");
+	printf("\n");
+
+	for(i=1; i<=10; i++)
+		printf("%3d", i);
+	printf("\n");
+
+	for(i=0; i<33; i++)
+		printf("-");
+	printf("\n");
+
+	for(i=0; i<SIZE; i++) {
+		a[i] = rand()%101;
+		printf("%3d", a[i]);
+	}
+	printf("\n\n");
+
+	for(i=0; i<SIZE; i++) {
+		if(min>a[i])
+			min = a[i];
+	}
+	printf("최소값은 %d입니다.\n", min);
+
+
+	return 0;
+}
+
+
+
+11. 최소값 정렬 - 버블 알고리즘
+
+#include <stdio.h> //최소값 정렬 알고리즘! 버블 알고리즘O(n^2)
+#define SIZE 5
+int main() {
+	int a[SIZE] = {4, 2, 5, 1, 3};
+	int n, i, tmp;
+
+	for(i=0; i<SIZE; i++)
+		printf("%2d", a[i]);
+	printf("\n");
+
+	for(n=0; n<SIZE-1; n++) {
+		for(i=1; i<=SIZE; i++) {
+			if(a[i-1]>a[i]) {
+				tmp=a[i-1];
+				a[i-1]=a[i];
+				a[i]=tmp;
+			}
+		}
+	}
+
+	for(i=0; i<SIZE; i++)
+		printf("%2d", a[i]);
+	printf("\n");
+
+	return 0;
+}
+
+
+
+12. 최소값 정렬 - 피벗 알고리즘 실패작
+
+#include <stdio.h>
+#include <stdlib.h>
+#define SIZE 5
+int main() {
+	int a[SIZE] = { 0 };
+	int i, j, pivot, tmp;
+
+	do {
+		for (i = 0; i < SIZE; i++)
+			a[i] = rand() % 11;
+	}while(a[0]==a[1] || a[0]==a[2] || a[0]==a[3] || a[0]==a[4] ||
+			a[1]==a[2] || a[1]==a[3] || a[1]==a[4] ||
+			a[2]==a[3] || a[2]==a[4] || a[3]==a[4]);
+
+	for(i=0; i<SIZE; i++) {
+		printf("%3d", a[i]);
+	}
+	printf("\n");
+
+	pivot = a[SIZE/2];
+
+	while(1) {
+		if(a[0]<a[1] && a[1]<a[2] && a[2]<a[3] && a[3]<a[4])
+			break;
+
+		for(i=0; i<SIZE; i++) {
+			for(j=SIZE-1; j>=0; j--) {
+				if(a[i]>pivot && a[j]<pivot) {
+					tmp = a[i];
+					a[i] = a[j];
+					a[j] = tmp;
+				}
+			}
+		}
+		tmp=pivot;
+		pivot=a[(SIZE/2)+1];
+		a[(SIZE/2)+1]=tmp;
+	}
+
+	for(i=0; i<SIZE; i++) {
+		printf("%3d", a[i]);
+	}
+	printf("\n");
+
+
+
+return 0;
+}
+
+
+13. 퀵정렬인가 아무튼 미묘한 실패작
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#define SIZE 8
+int main() {
+	int a[SIZE] = {0};
+	int i, j, tmp;
+
+	srand((unsigned)time(NULL));
+
+	for(i=0; i<SIZE; i++) {
+		a[i] = rand()%10+1;
+		printf("%3d", a[i]);
+	}
+	printf("\n");
+
+	for(i=1; i<=4; i++) {
+		if(a[i-1]>a[i]) {
+			tmp = a[i-1];
+			a[i-1] = a[i];
+			a[i] = tmp;
+		}
+	}
+	for(i=1; i<=2; i++) {
+		for(j=1; j<i+3; j++) {
+			if(a[j-1]>a[j]) {
+				tmp = a[j-1];
+				a[j-1] = a[j];
+				a[j] = tmp;
+			}
+		}
+	}
+	for(i=1; i<SIZE; i++) {
+		if(a[i-1]>a[i]) {
+			tmp = a[i-1];
+			a[i-1] = a[i];
+			a[i] = tmp;
+		}
+	}
+	for(i=0; i<SIZE; i++) {
+	printf("%3d", a[i]);
+	}
+	return 0;
+}
+
+
+

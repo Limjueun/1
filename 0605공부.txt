@@ -1,0 +1,144 @@
+6/5 공부
+
+1. 교과서 220쪽 산술 계산기 만들기
+
+#include <stdio.h>
+int main() {
+	char op;
+	int x, y, result;
+
+	printf("수식 입력 (예 : 2 + 5) \n");
+	printf(" >> ");
+	fflush(stdout);
+	scanf("%d %c %d", &x, &op, &y);
+
+	if(op=='+') result = x + y;
+	else if(op=='-') result = x - y;
+	else if(op=='*') result = x * y;
+	else if(op=='/') result = x / y;
+	else if(op=='%') result = x % y;
+	else if(op=='&') result = x & y;
+	else if(op=='|') result = x | y;
+	else if(op=='^') result = x ^ y;
+
+	if(op=='&' || op=='|' || op=='^') printf("%x %c %x = %08X", x, op, y, result);
+	else printf("%d %c %d = %d", x, op, y, result);
+
+	return 0;
+}
+
+
+
+
+
+2. 221쪽 연속 if-else문 만들기
+
+#include <stdio.h>
+int main() {
+	int n;
+
+	printf("컵 사이즈 입력 : ");
+	fflush(stdout);
+	scanf("%d", &n);
+
+	if(n<100) printf("small");
+	else if(n<200) printf("medium");
+	else printf("large");
+
+	return 0;
+}
+
+
+
+
+3. 223쪽 switch-case문 연습
+
+#include <stdio.h>
+int main() {
+	int num;
+
+	printf("입력 : ");
+	fflush(stdout);
+	scanf("%d", &num);
+
+	switch(num) {
+	case 0:
+		printf("없음");
+		break;
+	case 1:
+		printf("하나");
+		break;
+	default:
+		printf("몰라");
+	}
+	return
+
+
+
+
+4. 251쪽 while(scanf("%d", &n)!=EOF) 연습 //원하는 값을 계속 입력하면서 while문을 돌릴 수 있음. 컨트롤제트 누르면 while문 종료.
+
+#include <stdio.h>
+#include <limits.h>
+
+int main() {
+	int number, min_value = INT_MAX; //정수의 최댓값을 일단 대입해둔다.
+
+	printf("정수를 입력하시오\n종료는 Ctrl+Z\n");
+	fflush(stdout);
+
+	while(scanf("%d", &number) != EOF) {
+		if(number<min_value)
+			min_value=number;
+	}
+	printf("최소값은 %d\n", min_value);
+	return 0;
+}
+
+
+
+
+
+5. 252쪽 최대공약수 구하기 //while문 조건식 틀리게 썼음
+
+#include <stdio.h>
+int main() {
+	int a, b, r;
+
+	printf("a(큰 수) b(작은 수) : ");
+	fflush(stdout);
+	scanf("%d %d", &a, &b);
+
+	while(b!=0) {
+		r=a%b;
+		a=b;
+		b=r;
+	}
+	printf("최대공약수는 %d", a);
+
+	return 0;
+}
+
+
+
+
+
+6. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
